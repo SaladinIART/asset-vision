@@ -10,9 +10,9 @@
 | CP | Task | Status |
 |----|------|--------|
 | A0 | WSL2 Ubuntu 22.04 + dev tooling | ✅ done |
-| A1 | Camera capture module (Oppo Reno7 → IP Webcam → OpenCV) | 🔄 in progress |
-| A2 | YOLO detection module (YOLOv8n, CPU) | ⬜ todo |
-| A3 | QR generator + reader | ⬜ todo |
+| A1 | Camera capture module (Oppo Reno7 → IP Webcam → OpenCV) | ✅ done |
+| A2 | YOLO detection module (YOLOv8n, CPU) | ✅ done |
+| A3 | QR generator + reader | 🔄 in progress |
 | A4 | SQLite store + presence logic (present / missing) | ⬜ todo |
 | A5 | Pipeline orchestration (capture → detect → QR → store) | ⬜ todo |
 | A6 | FastAPI web dashboard (live feed + roster + QR generator) | ⬜ todo |
