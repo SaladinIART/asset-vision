@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Data (local only — never commit)
+data/
+*.db
+*.sqlite3
+
+# Model weights (large, auto-downloaded)
+*.pt
+*.onnx
+*.xml
+*.bin
+
+# Captured frames / thumbnails
+frames/
+snapshots/
+*.jpg
+*.png
+!web/static/**/*.png
+!docs/**/*.png
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

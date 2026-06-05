@@ -1,0 +1,23 @@
+# Asset-Vision — Python dependencies
+# Install inside WSL2: pip install -r requirements.txt
+
+# Vision / ML
+ultralytics>=8.2.0          # YOLOv8; auto-downloads yolov8n.pt on first use
+torch>=2.2.0                # CPU build — no CUDA needed
+torchvision>=0.17.0
+opencv-python-headless>=4.9.0  # headless for WSL; use opencv-python locally
+pyzbar>=0.1.9               # QR / barcode decode (needs libzbar0 apt package)
+qrcode[pil]>=7.4.2          # QR label generation
+Pillow>=10.0.0
+
+# Web dashboard
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+jinja2>=3.1.0
+python-multipart>=0.0.9     # form uploads
+
+# Storage
+# sqlite3 is stdlib — no extra package needed
+
+# Config / utils
+pyyaml>=6.0.1

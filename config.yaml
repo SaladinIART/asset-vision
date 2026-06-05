@@ -1,0 +1,28 @@
+# Asset-Vision configuration
+# Edit these values to match your setup before running.
+
+camera:
+  url: "http://192.168.1.100:8080/video"   # IP Webcam MJPEG stream — change IP!
+  shot_url: "http://192.168.1.100:8080/shot.jpg"  # single-frame endpoint
+  target_fps: 5          # frames per second to process (keep low on CPU-only)
+  width: 640             # resize width (height auto-scaled)
+  reconnect_delay: 3     # seconds between reconnect attempts
+
+detection:
+  model: "yolov8n.pt"    # auto-downloaded on first run; gitignored
+  confidence: 0.45       # minimum confidence threshold
+  device: "cpu"          # cpu only (no CUDA on this machine)
+
+qr:
+  prefix: "AV-"          # asset ID prefix, e.g. AV-0001
+  label_size_mm: 35      # printed QR label size
+
+storage:
+  db_path: "data/assets.db"
+  frames_dir: "data/frames"
+  presence_window_sec: 300   # seconds until an asset flips to "missing"
+
+web:
+  host: "0.0.0.0"
+  port: 8000
+  stream_fps: 10          # annotated MJPEG stream FPS to browser
