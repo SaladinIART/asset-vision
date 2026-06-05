@@ -9,8 +9,8 @@
 
 | CP | Task | Status |
 |----|------|--------|
-| A0 | WSL2 Ubuntu 22.04 + dev tooling | 🔄 in progress |
-| A1 | Camera capture module (Oppo Reno7 → IP Webcam → OpenCV) | ⬜ todo |
+| A0 | WSL2 Ubuntu 22.04 + dev tooling | ✅ done |
+| A1 | Camera capture module (Oppo Reno7 → IP Webcam → OpenCV) | 🔄 in progress |
 | A2 | YOLO detection module (YOLOv8n, CPU) | ⬜ todo |
 | A3 | QR generator + reader | ⬜ todo |
 | A4 | SQLite store + presence logic (present / missing) | ⬜ todo |
