@@ -15,8 +15,8 @@
 | A3 | QR generator + reader | ✅ done |
 | A4 | SQLite store + presence logic (present / missing) | ✅ done |
 | A5 | Pipeline orchestration (capture → detect → QR → store) | ✅ done |
-| A6 | FastAPI web dashboard (live feed + roster + QR generator) | 🔄 in progress |
-| A7 | Repo hygiene + README + demo assets → **LinkedIn post #1** | ⬜ todo |
+| A6 | FastAPI web dashboard (live feed + roster + QR generator) | ✅ done |
+| A7 | Repo hygiene + README + demo assets → **LinkedIn post #1** | 🔄 in progress |
 
 ## Phase B — ROS2 Humble Refactor
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add Asset — Asset-Vision</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="logo">📦</span>
+      <span>Asset<strong>Vision</strong></span>
+    </div>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/register" class="btn-sm active">+ Add Asset</a>
+    </nav>
+  </header>
+
+  <main style="max-width:520px; margin:2rem auto;">
+    <h2>Register New Asset</h2>
+    <p class="hint">Fill in the details and print the generated QR label. Stick it on the item.</p>
+
+    <form id="reg-form" class="reg-form">
+      <label>Asset ID <span class="req">*</span>
+        <input name="asset_id" required placeholder="e.g. 0001" maxlength="32">
+        <small>Will be stored as AV-0001 (prefix added automatically)</small>
+      </label>
+      <label>Name
+        <input name="name" placeholder="e.g. Laptop Charger" maxlength="64">
+      </label>
+      <label>Category
+        <input name="category" placeholder="e.g. electronics" maxlength="32">
+      </label>
+      <label>Notes
+        <textarea name="notes" rows="3" placeholder="Optional notes…"></textarea>
+      </label>
+      <button type="submit" class="btn-primary">Register &amp; Get QR Label</button>
+    </form>
+
+    <div id="result" class="result-box hidden"></div>
+  </main>
+
+  <script>
+    document.getElementById("reg-form").addEventListener("submit", async e => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const res = await fetch("/api/assets", { method: "POST", body: fd });
+      const data = await res.json();
+      const box = document.getElementById("result");
+      if (data.ok) {
+        box.className = "result-box ok";
+        box.innerHTML = `
+          <strong>✅ Registered: ${data.asset_id}</strong><br>
+          <a class="btn-sm" href="/api/assets/${data.asset_id}/qr.png" download>⬇ Download QR Label</a>
+          &nbsp;
+          <a class="btn-sm" href="/">← Back to Dashboard</a>`;
+        e.target.reset();
+      } else {
+        box.className = "result-box err";
+        box.textContent = "Error — asset may already exist.";
+      }
+    });
+  </script>
+</body>
+</html>

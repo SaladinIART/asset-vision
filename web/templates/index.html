@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asset-Vision</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="logo">📦</span>
+      <span>Asset<strong>Vision</strong></span>
+    </div>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/register" class="btn-sm">+ Add Asset</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Stats bar -->
+    <section class="stats-bar" id="stats-bar">
+      <div class="stat">
+        <span class="stat-val" id="s-total">{{ stats.total_assets }}</span>
+        <span class="stat-lbl">Total Assets</span>
+      </div>
+      <div class="stat present">
+        <span class="stat-val" id="s-present">{{ stats.by_status.get("present", 0) }}</span>
+        <span class="stat-lbl">Present</span>
+      </div>
+      <div class="stat missing">
+        <span class="stat-val" id="s-missing">{{ stats.by_status.get("missing", 0) }}</span>
+        <span class="stat-lbl">Missing</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val" id="s-fps">{{ "%.1f"|format(pipe_stats.fps) }}</span>
+        <span class="stat-lbl">Pipeline FPS</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val" id="s-det">{{ pipe_stats.detections }}</span>
+        <span class="stat-lbl">Detections</span>
+      </div>
+    </section>
+
+    <div class="layout">
+      <!-- Live feed -->
+      <section class="feed-panel">
+        <h2>Live Feed</h2>
+        <div class="feed-wrap">
+          <img id="live-feed" src="/stream" alt="live feed">
+        </div>
+        <p class="hint">Camera: IP Webcam (Oppo Reno7) · YOLOv8n · CPU</p>
+      </section>
+
+      <!-- Inventory roster -->
+      <section class="roster-panel">
+        <h2>Inventory Roster</h2>
+        <table id="roster-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Category</th>
+              <th>Status</th><th>Last Seen</th><th>QR</th>
+            </tr>
+          </thead>
+          <tbody id="roster-body">
+            {% for a in roster %}
+            <tr class="row-{{ a.status }}">
+              <td class="mono">{{ a.asset_id }}</td>
+              <td>{{ a.name or "—" }}</td>
+              <td>{{ a.category or "—" }}</td>
+              <td><span class="badge badge-{{ a.status }}">{{ a.status }}</span></td>
+              <td>{{ a.last_seen | int | ts if a.last_seen else "never" }}</td>
+              <td><a href="/api/assets/{{ a.asset_id }}/qr.png" title="Download QR">⬇</a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="empty">No assets registered yet. <a href="/register">Add one →</a></td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="roster-actions">
+          <a href="/api/sheet.png" class="btn-sm">⬇ Print all QR labels</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Recent detections strip -->
+    <section class="recent-panel">
+      <h2>Recent Detections</h2>
+      <div class="recent-list" id="recent-list">
+        {% for d in recent %}
+        <div class="det-chip {% if d.asset_id %}linked{% endif %}">
+          <span class="det-label">{{ d.label }}</span>
+          <span class="det-conf">{{ "%.0f%%"|format(d.confidence * 100) }}</span>
+          {% if d.asset_id %}<span class="det-id">{{ d.asset_id }}</span>{% endif %}
+        </div>
+        {% else %}
+        <p class="empty">No detections yet.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Auto-refresh stats + roster every 5 s without reloading the stream
+    function fmtTs(unix) {
+      if (!unix) return "never";
+      const d = new Date(unix * 1000);
+      return d.toLocaleTimeString();
+    }
+
+    async function refresh() {
+      try {
+        const [statsRes, rosterRes] = await Promise.all([
+          fetch("/api/stats"), fetch("/api/roster")
+        ]);
+        const stats = await statsRes.json();
+        const roster = await rosterRes.json();
+
+        document.getElementById("s-total").textContent   = stats.total_assets ?? "—";
+        document.getElementById("s-present").textContent = (stats.by_status?.present ?? 0);
+        document.getElementById("s-missing").textContent = (stats.by_status?.missing ?? 0);
+        document.getElementById("s-fps").textContent     = (stats.fps ?? 0).toFixed(1);
+        document.getElementById("s-det").textContent     = stats.detections ?? "—";
+
+        const tbody = document.getElementById("roster-body");
+        if (roster.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty">No assets yet. <a href="/register">Add one →</a></td></tr>';
+          return;
+        }
+        tbody.innerHTML = roster.map(a => `
+          <tr class="row-${a.status}">
+            <td class="mono">${a.asset_id}</td>
+            <td>${a.name || "—"}</td>
+            <td>${a.category || "—"}</td>
+            <td><span class="badge badge-${a.status}">${a.status}</span></td>
+            <td>${fmtTs(a.last_seen)}</td>
+            <td><a href="/api/assets/${a.asset_id}/qr.png" title="Download QR">⬇</a></td>
+          </tr>`).join("");
+      } catch (e) { console.warn("refresh error", e); }
+    }
+
+    setInterval(refresh, 5000);
+  </script>
+</body>
+</html>
