@@ -2,8 +2,8 @@
 # Edit these values to match your setup before running.
 
 camera:
-  url: "http://192.168.1.100:8080/video"   # IP Webcam MJPEG stream — change IP!
-  shot_url: "http://192.168.1.100:8080/shot.jpg"  # single-frame endpoint
+  url: "http://192.168.0.5:8080/video"     # Oppo Reno7 IP Webcam
+  shot_url: "http://192.168.0.5:8080/shot.jpg"
   target_fps: 5          # frames per second to process (keep low on CPU-only)
   width: 640             # resize width (height auto-scaled)
   reconnect_delay: 3     # seconds between reconnect attempts
