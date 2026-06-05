@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "asset-vision",
+      "runtimeExecutable": "wsl",
+      "runtimeArgs": ["-d", "Ubuntu-22.04", "-u", "salbot01", "--", "bash", "-c", "cd /mnt/c/Users/salbot01/Salbotics/asset-vision && mkdir -p data && ~/asset-venv/bin/uvicorn web.app:app --host 0.0.0.0 --port 8000"],
+      "port": 8000
+    }
+  ]
+}
