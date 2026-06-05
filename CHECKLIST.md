@@ -13,8 +13,8 @@
 | A1 | Camera capture module (Oppo Reno7 → IP Webcam → OpenCV) | ✅ done |
 | A2 | YOLO detection module (YOLOv8n, CPU) | ✅ done |
 | A3 | QR generator + reader | ✅ done |
-| A4 | SQLite store + presence logic (present / missing) | 🔄 in progress |
-| A5 | Pipeline orchestration (capture → detect → QR → store) | ⬜ todo |
+| A4 | SQLite store + presence logic (present / missing) | ✅ done |
+| A5 | Pipeline orchestration (capture → detect → QR → store) | 🔄 in progress |
 | A6 | FastAPI web dashboard (live feed + roster + QR generator) | ⬜ todo |
 | A7 | Repo hygiene + README + demo assets → **LinkedIn post #1** | ⬜ todo |
 
