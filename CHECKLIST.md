@@ -25,8 +25,8 @@
 | B0 | Install ROS2 Humble desktop (same WSL2) | ✅ done |
 | B1 | colcon workspace + custom interfaces (msg / srv) | ✅ done |
 | B2 | camera_node (publishes `/image_raw`) | ✅ done |
-| B3 | perception_node (YOLO + QR → `/detections`) | 🔄 in progress |
-| B4 | asset_manager_node + QueryInventory service | ⬜ todo |
+| B3 | perception_node (YOLO + QR → `/detections`) | ✅ done |
+| B4 | asset_manager_node + QueryInventory service | 🔄 in progress |
 | B5 | launch file + RViz + dashboard integration → **LinkedIn post #2** | ⬜ todo |
 | B6 | README v2 — robotics section + node-graph diagram | ⬜ todo |
 
