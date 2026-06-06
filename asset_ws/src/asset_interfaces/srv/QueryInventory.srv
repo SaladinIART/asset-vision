@@ -1,0 +1,13 @@
+# Request the current inventory roster from asset_manager_node.
+# Filter by status ("present", "missing", "unknown", or "" for all).
+
+string status_filter    # "" = return all assets
+---
+string[] asset_ids
+string[] names
+string[] categories
+string[] statuses
+float64[] last_seen     # unix timestamps (0.0 = never seen)
+int32 total_assets
+int32 present_count
+int32 missing_count

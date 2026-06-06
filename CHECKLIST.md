@@ -23,8 +23,8 @@
 | CP | Task | Status |
 |----|------|--------|
 | B0 | Install ROS2 Humble desktop (same WSL2) | ✅ done |
-| B1 | colcon workspace + custom interfaces (msg / srv) | 🔄 in progress |
-| B2 | camera_node (publishes `/image_raw`) | ⬜ todo |
+| B1 | colcon workspace + custom interfaces (msg / srv) | ✅ done |
+| B2 | camera_node (publishes `/image_raw`) | 🔄 in progress |
 | B3 | perception_node (YOLO + QR → `/detections`) | ⬜ todo |
 | B4 | asset_manager_node + QueryInventory service | ⬜ todo |
 | B5 | launch file + RViz + dashboard integration → **LinkedIn post #2** | ⬜ todo |
