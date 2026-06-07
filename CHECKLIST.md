@@ -27,8 +27,8 @@
 | B2 | camera_node (publishes `/image_raw`) | ✅ done |
 | B3 | perception_node (YOLO + QR → `/detections`) | ✅ done |
 | B4 | asset_manager_node + QueryInventory service | ✅ done |
-| B5 | launch file + RViz + dashboard integration → **LinkedIn post #2** | 🔄 in progress |
-| B6 | README v2 — robotics section + node-graph diagram | ⬜ todo |
+| B5 | launch file + RViz + dashboard integration → **LinkedIn post #2** | ✅ done |
+| B6 | README v2 — robotics section + node-graph diagram | ✅ done |
 
 ## Phase C — Later
 
