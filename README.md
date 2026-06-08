@@ -16,9 +16,16 @@ A computer-vision inventory scanner that detects, identifies, and tracks persona
 
 ## Demo
 
+### Phase A — Web dashboard (FastAPI)
+
 ![dashboard screenshot](docs/dashboard.png)
 
 **Live annotated feed · Inventory roster (present / missing) · One-click QR label printing**
+
+### Phase B — ROS2 node graph
+
+<!-- rqt_graph screenshot — add docs/rqt_graph.png after a live capture session -->
+> 📷 *Live rqt_graph screenshot coming — run `ros2 launch asset_perception asset_system.launch.py` and `rqt_graph` to reproduce.*
 
 ---
 
@@ -35,7 +42,7 @@ The result covers four things at once: **ML / machine vision · robotics (ROS2) 
 
 ---
 
-## Architecture
+## Architecture detail
 
 ### Phase A — Plain Python
 
@@ -164,7 +171,7 @@ ros2 service call /asset_manager_node/query_inventory \
 | RAM | 32 GB |
 | GPU | Intel Iris Xe (no CUDA — pure CPU inference) |
 | Platform | WSL2 Ubuntu 22.04 on Windows 11 |
-| Camera | Oppo Reno7 running **IP Webcam** app over WiFi |
+| Camera | USB webcam (primary) · Oppo Reno7 **IP Webcam** app (WiFi fallback) |
 
 CPU-only YOLOv8n achieves **~9 FPS** at 640 px on this hardware — sufficient for room-scale asset monitoring.
 
