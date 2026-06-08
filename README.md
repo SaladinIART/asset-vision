@@ -247,6 +247,24 @@ See **[LAUNCH_GUIDE.md](LAUNCH_GUIDE.md)** for the full step-by-step.
 
 ---
 
+## Camera compatibility
+
+The same pluggable code runs across three environments — pick the camera that matches your setup:
+
+| Source | Windows (native) | WSL2 Ubuntu | Native Linux | Notes |
+|--------|:---:|:---:|:---:|-------|
+| `sample` — offline image loop | ✅ | ✅ | ✅ | **Default.** No hardware needed |
+| `ipcam` — phone IP Webcam | ✅ | ✅ | ✅ | WiFi only; install [IP Webcam](https://play.google.com/store/apps/details?id=com.pas.webcam) |
+| `usb` — USB camera | ✅ native | ⚠️ usbipd-win | ✅ | WSL2 needs [usbipd passthrough](docs/CAMERA_SOURCES.md#usbipd-win-full-walkthrough) |
+| `integrated` — built-in webcam | ✅ native | ⚠️ usbipd-win | ✅ | Same as `usb`; Windows-native is the easiest path |
+
+> **Tip:** On Windows, run Phase A natively (`.\scripts\run.ps1`) — direct camera access, no usbipd needed.
+> On WSL2, `sample` and `ipcam` work out of the box; USB requires passthrough.
+
+→ Full comparison: **[docs/CAMERA_SOURCES.md](docs/CAMERA_SOURCES.md)** · Windows setup: **[WINDOWS.md](WINDOWS.md)**
+
+---
+
 ## Features
 
 | Feature | Detail |
