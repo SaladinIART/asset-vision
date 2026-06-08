@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620" font-family="'Segoe UI', 'Liberation Sans', Arial, sans-serif">
+
+  <!-- Background -->
+  <rect width="900" height="620" fill="#0f1117"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#e2e8f0" letter-spacing="1">Asset-Vision — System Architecture</text>
+  <text x="450" y="58" text-anchor="middle" font-size="12" fill="#64748b">Machine Vision · ROS2 · SQLite · FastAPI</text>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION LABELS
+  ══════════════════════════════════════════════════════ -->
+
+  <!-- Phase A label -->
+  <rect x="16" y="76" width="560" height="22" rx="4" fill="#1e293b"/>
+  <text x="296" y="91" text-anchor="middle" font-size="11" font-weight="600" fill="#94a3b8" letter-spacing="2">PHASE A — PLAIN PYTHON PIPELINE</text>
+
+  <!-- Phase B label -->
+  <rect x="16" y="340" width="560" height="22" rx="4" fill="#1e2a3b"/>
+  <text x="296" y="355" text-anchor="middle" font-size="11" font-weight="600" fill="#7dd3fc" letter-spacing="2">PHASE B — ROS2 HUMBLE NODE GRAPH</text>
+
+  <!-- ══════════════════════════════════════════════════════
+       PHASE A NODES
+  ══════════════════════════════════════════════════════ -->
+
+  <!-- Camera (phone) -->
+  <rect x="28" y="112" width="110" height="64" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="83" y="135" text-anchor="middle" font-size="10" fill="#94a3b8">📱 Phone</text>
+  <text x="83" y="150" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">IP Webcam</text>
+  <text x="83" y="165" text-anchor="middle" font-size="9" fill="#64748b">MJPEG / WiFi</text>
+
+  <!-- Arrow phone -> capture -->
+  <line x1="138" y1="144" x2="166" y2="144" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- capture.py -->
+  <rect x="168" y="112" width="110" height="64" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="223" y="135" text-anchor="middle" font-size="9" fill="#94a3b8">capture.py</text>
+  <text x="223" y="150" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">IPCamera</text>
+  <text x="223" y="165" text-anchor="middle" font-size="9" fill="#64748b">USB · sample</text>
+
+  <!-- Arrow capture -> detector -->
+  <line x1="278" y1="144" x2="306" y2="144" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- detector.py -->
+  <rect x="308" y="112" width="110" height="64" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="363" y="135" text-anchor="middle" font-size="9" fill="#93c5fd">detector.py</text>
+  <text x="363" y="150" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">YOLOv8n</text>
+  <text x="363" y="165" text-anchor="middle" font-size="9" fill="#64748b">80 COCO · CPU</text>
+
+  <!-- Arrow detector -> qrtools (diagonal) -->
+  <line x1="418" y1="144" x2="445" y2="144" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- qrtools.py -->
+  <rect x="447" y="112" width="110" height="64" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="502" y="135" text-anchor="middle" font-size="9" fill="#94a3b8">qrtools.py</text>
+  <text x="502" y="150" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">QR Decode</text>
+  <text x="502" y="165" text-anchor="middle" font-size="9" fill="#64748b">pyzbar · IoU assoc</text>
+
+  <!-- pipeline.py orchestration box -->
+  <rect x="168" y="198" width="390" height="52" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="363" y="220" text-anchor="middle" font-size="10" fill="#64748b">pipeline.py — orchestration loop</text>
+  <text x="363" y="236" text-anchor="middle" font-size="9" fill="#475569">capture → detect → QR → associate → store → annotate</text>
+
+  <!-- Arrows down to pipeline -->
+  <line x1="223" y1="176" x2="223" y2="198" stroke="#334155" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="363" y1="176" x2="363" y2="198" stroke="#334155" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="502" y1="176" x2="502" y2="198" stroke="#334155" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- ══════════════════════════════════════════════════════
+       SHARED STORE (centre)
+  ══════════════════════════════════════════════════════ -->
+
+  <!-- store.py / SQLite -->
+  <rect x="248" y="268" width="230" height="54" rx="8" fill="#14532d" stroke="#16a34a" stroke-width="2"/>
+  <text x="363" y="289" text-anchor="middle" font-size="10" fill="#86efac">store.py · SQLite (WAL)</text>
+  <text x="363" y="305" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">Shared Source of Truth</text>
+  <text x="363" y="319" text-anchor="middle" font-size="9" fill="#86efac">assets · detections · presence / last-seen</text>
+
+  <!-- Arrow pipeline -> store -->
+  <line x1="363" y1="250" x2="363" y2="268" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <!-- ══════════════════════════════════════════════════════
+       PHASE B NODES
+  ══════════════════════════════════════════════════════ -->
+
+  <!-- camera_node -->
+  <rect x="28" y="374" width="130" height="70" rx="8" fill="#1e2a3b" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="93" y="394" text-anchor="middle" font-size="9" fill="#93c5fd">ROS2 Node</text>
+  <text x="93" y="409" text-anchor="middle" font-size="11" font-weight="700" fill="#e2e8f0">camera_node</text>
+  <text x="93" y="424" text-anchor="middle" font-size="9" fill="#64748b">reuses capture.py</text>
+  <text x="93" y="437" text-anchor="middle" font-size="8" fill="#475569">pub: /image_raw</text>
+
+  <!-- Arrow camera -> perception -->
+  <line x1="158" y1="409" x2="193" y2="409" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="175" y="403" text-anchor="middle" font-size="8" fill="#60a5fa">/image_raw</text>
+
+  <!-- perception_node -->
+  <rect x="195" y="374" width="150" height="70" rx="8" fill="#1e2a3b" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="270" y="394" text-anchor="middle" font-size="9" fill="#c4b5fd">ROS2 Node</text>
+  <text x="270" y="409" text-anchor="middle" font-size="11" font-weight="700" fill="#e2e8f0">perception_node</text>
+  <text x="270" y="424" text-anchor="middle" font-size="9" fill="#64748b">YOLO + QR + IoU</text>
+  <text x="270" y="437" text-anchor="middle" font-size="8" fill="#475569">pub: /detections</text>
+
+  <!-- Arrow perception -> manager -->
+  <line x1="345" y1="409" x2="383" y2="409" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arr-purple)"/>
+  <text x="364" y="403" text-anchor="middle" font-size="8" fill="#a78bfa">/detections</text>
+
+  <!-- asset_manager_node -->
+  <rect x="385" y="374" width="155" height="70" rx="8" fill="#1e2a3b" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="462" y="394" text-anchor="middle" font-size="9" fill="#fcd34d">ROS2 Node</text>
+  <text x="462" y="409" text-anchor="middle" font-size="10" font-weight="700" fill="#e2e8f0">asset_manager_node</text>
+  <text x="462" y="424" text-anchor="middle" font-size="9" fill="#64748b">reuses store.py</text>
+  <text x="462" y="437" text-anchor="middle" font-size="8" fill="#475569">srv: QueryInventory</text>
+
+  <!-- Arrow manager -> SQLite (up) -->
+  <line x1="462" y1="374" x2="462" y2="322" stroke="#16a34a" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arr-green)"/>
+
+  <!-- launch file box -->
+  <rect x="28" y="462" width="512" height="28" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="284" y="480" text-anchor="middle" font-size="10" fill="#64748b">asset_system.launch.py — one command starts all 3 nodes</text>
+  <!-- dashed lines from launch to each node -->
+  <line x1="93"  y1="462" x2="93"  y2="444" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="270" y1="462" x2="270" y2="444" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="462" y1="462" x2="462" y2="444" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- ══════════════════════════════════════════════════════
+       RIGHT COLUMN — WEB + VISUALISE
+  ══════════════════════════════════════════════════════ -->
+
+  <!-- Web dashboard -->
+  <rect x="620" y="240" width="256" height="108" rx="8" fill="#1c1f2e" stroke="#0ea5e9" stroke-width="2"/>
+  <text x="748" y="263" text-anchor="middle" font-size="10" fill="#7dd3fc">web/app.py · FastAPI + Uvicorn</text>
+  <text x="748" y="280" text-anchor="middle" font-size="14" font-weight="700" fill="#38bdf8">Web Dashboard</text>
+  <text x="748" y="297" text-anchor="middle" font-size="10" fill="#94a3b8">localhost:8100</text>
+  <text x="748" y="312" text-anchor="middle" font-size="9" fill="#64748b">MJPEG stream  ·  roster table</text>
+  <text x="748" y="326" text-anchor="middle" font-size="9" fill="#64748b">QR label gen  ·  asset registration</text>
+  <text x="748" y="340" text-anchor="middle" font-size="9" fill="#64748b">reads same SQLite — no sync needed</text>
+
+  <!-- Arrow SQLite -> dashboard -->
+  <line x1="478" y1="295" x2="618" y2="295" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="548" y="289" text-anchor="middle" font-size="9" fill="#4ade80">reads SQLite</text>
+
+  <!-- RViz2 / rqt box -->
+  <rect x="620" y="374" width="256" height="70" rx="8" fill="#1c1f2e" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="748" y="397" text-anchor="middle" font-size="10" fill="#a5b4fc">Visualisation (Phase B)</text>
+  <text x="748" y="414" text-anchor="middle" font-size="13" font-weight="700" fill="#818cf8">RViz2  ·  rqt_graph</text>
+  <text x="748" y="430" text-anchor="middle" font-size="9" fill="#64748b">/image_annotated stream</text>
+  <text x="748" y="443" text-anchor="middle" font-size="9" fill="#64748b">node graph topology</text>
+
+  <!-- Arrow perception /image_annotated -> RViz -->
+  <line x1="345" y1="430" x2="618" y2="420" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arr-indigo)"/>
+  <text x="480" y="415" text-anchor="middle" font-size="8" fill="#818cf8">/image_annotated</text>
+
+  <!-- ══════════════════════════════════════════════════════
+       CAMERA SOURCE KEY (bottom left)
+  ══════════════════════════════════════════════════════ -->
+
+  <rect x="28" y="510" width="510" height="96" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="283" y="528" text-anchor="middle" font-size="10" font-weight="600" fill="#64748b" letter-spacing="1">CAMERA SOURCE OPTIONS  (camera.source in config.yaml)</text>
+
+  <!-- sample -->
+  <rect x="40" y="538" width="110" height="56" rx="5" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="95" y="555" text-anchor="middle" font-size="10" font-weight="700" fill="#e2e8f0">sample</text>
+  <text x="95" y="569" text-anchor="middle" font-size="8" fill="#4ade80">✅ No hardware</text>
+  <text x="95" y="581" text-anchor="middle" font-size="8" fill="#64748b">Works everywhere</text>
+  <text x="95" y="593" text-anchor="middle" font-size="8" fill="#64748b">Best for first run</text>
+
+  <!-- usb -->
+  <rect x="162" y="538" width="110" height="56" rx="5" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="217" y="555" text-anchor="middle" font-size="10" font-weight="700" fill="#e2e8f0">usb</text>
+  <text x="217" y="569" text-anchor="middle" font-size="8" fill="#fbbf24">⚠️ WSL2: usbipd</text>
+  <text x="217" y="581" text-anchor="middle" font-size="8" fill="#64748b">Low latency</text>
+  <text x="217" y="593" text-anchor="middle" font-size="8" fill="#64748b">~30–80 ms</text>
+
+  <!-- integrated -->
+  <rect x="284" y="538" width="110" height="56" rx="5" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="339" y="555" text-anchor="middle" font-size="10" font-weight="700" fill="#e2e8f0">integrated</text>
+  <text x="339" y="569" text-anchor="middle" font-size="8" fill="#fbbf24">⚠️ WSL2: usbipd</text>
+  <text x="339" y="581" text-anchor="middle" font-size="8" fill="#64748b">Built-in webcam</text>
+  <text x="339" y="593" text-anchor="middle" font-size="8" fill="#64748b">alias for usb idx=0</text>
+
+  <!-- ipcam -->
+  <rect x="406" y="538" width="120" height="56" rx="5" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="466" y="555" text-anchor="middle" font-size="10" font-weight="700" fill="#e2e8f0">ipcam</text>
+  <text x="466" y="569" text-anchor="middle" font-size="8" fill="#4ade80">✅ WSL2 native</text>
+  <text x="466" y="581" text-anchor="middle" font-size="8" fill="#64748b">Phone via WiFi</text>
+  <text x="466" y="593" text-anchor="middle" font-size="8" fill="#64748b">~100–300 ms</text>
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════ -->
+  <text x="450" y="613" text-anchor="middle" font-size="9" fill="#334155">github.com/SaladinIART/asset-vision  ·  Salbotics 2026  ·  MIT License</text>
+
+  <!-- ══════════════════════════════════════════════════════
+       ARROW MARKERS
+  ══════════════════════════════════════════════════════ -->
+  <defs>
+    <marker id="arr-gray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#475569"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6"/>
+    </marker>
+    <marker id="arr-indigo" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6366f1"/>
+    </marker>
+  </defs>
+
+</svg>

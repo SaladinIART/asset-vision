@@ -6,6 +6,12 @@ A computer-vision inventory scanner that detects, identifies, and tracks persona
 
 ---
 
+## Architecture
+
+![Asset-Vision system architecture](docs/architecture.svg)
+
+---
+
 ## Demo
 
 ![dashboard screenshot](docs/dashboard.png)
