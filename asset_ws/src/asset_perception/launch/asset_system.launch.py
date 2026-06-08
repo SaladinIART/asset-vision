@@ -5,8 +5,9 @@ asset_system.launch.py — starts the full Asset-Vision ROS2 pipeline:
   perception_node    → subscribes /image_raw → publishes /detections + /image_annotated
   asset_manager_node → subscribes /detections → writes SQLite + serves QueryInventory
 
-project_root is auto-detected from this file's location (4 levels up from launch/).
-No hardcoded paths — works on any machine after cloning the repo.
+project_root is auto-detected by walking upward from this file until pyproject.toml
+is found. This works whether the file is run from the source tree or from the colcon
+install directory (colcon copies the launch file, which breaks fixed .parent counts).
 
 Usage:
   source /opt/ros/humble/setup.bash
@@ -22,20 +23,51 @@ Optional overrides (append key:=value):
   log_level:=info            (info | debug | warn)
 """
 
+import os
 from pathlib import Path
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, LogInfo
+from launch.actions import DeclareLaunchArgument, LogInfo, SetEnvironmentVariable
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
-# Auto-detect the repo root: this file is at
-#   <repo_root>/asset_ws/src/asset_perception/launch/asset_system.launch.py
-# so 4 .parent steps reach <repo_root>.
-_PROJECT_ROOT = str(Path(__file__).resolve().parent.parent.parent.parent)
+
+def _find_project_root() -> str:
+    """
+    Walk upward from this file until we find pyproject.toml (the repo root marker).
+    Falls back to ASSET_VISION_ROOT env var, then the directory 4 levels up.
+
+    colcon copies the launch file into install/…/share/…/launch/, so a fixed
+    .parent.parent.parent.parent count gives the wrong directory.  Walking upward
+    for pyproject.toml is install-location-agnostic.
+    """
+    # 1. Explicit env override (set in install.sh / CI / developer's shell)
+    env_root = os.environ.get("ASSET_VISION_ROOT", "")
+    if env_root and Path(env_root, "pyproject.toml").exists():
+        return env_root
+
+    # 2. Walk upward from this file looking for pyproject.toml
+    candidate = Path(__file__).resolve()
+    for _ in range(10):           # safety limit — don't walk forever
+        candidate = candidate.parent
+        if (candidate / "pyproject.toml").exists():
+            return str(candidate)
+
+    # 3. Last resort: 4 × parent (original behaviour — correct in source tree)
+    return str(Path(__file__).resolve().parent.parent.parent.parent)
+
+
+_PROJECT_ROOT = _find_project_root()
 
 
 def generate_launch_description():
+    # ── Inject project root into PYTHONPATH so nodes find asset_vision
+    #    even if `pip install -e .` was NOT run in the system Python3.
+    #    SetEnvironmentVariable prepends; existing PYTHONPATH is preserved.
+    _existing_pypath = os.environ.get("PYTHONPATH", "")
+    _new_pypath = f"{_PROJECT_ROOT}:{_existing_pypath}" if _existing_pypath else _PROJECT_ROOT
+    pythonpath_action = SetEnvironmentVariable("PYTHONPATH", _new_pypath)
+
     # ── Declare overridable arguments ──────────────────────────────────────
     args = [
         DeclareLaunchArgument(
@@ -132,4 +164,6 @@ def generate_launch_description():
         "════════════════════════════════════════════════\n"
     ))
 
-    return LaunchDescription(args + [banner, camera_node, perception_node, manager_node])
+    return LaunchDescription(
+        [pythonpath_action] + args + [banner, camera_node, perception_node, manager_node]
+    )

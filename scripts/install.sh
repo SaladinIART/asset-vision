@@ -64,12 +64,31 @@ else
 fi
 
 # ── 3. Python dependencies ────────────────────────────────────────────────
-info "Installing Python dependencies…"
+info "Installing Python dependencies (venv)…"
 "${VENV_DIR}/bin/pip" install --quiet --upgrade pip
 "${VENV_DIR}/bin/pip" install --quiet -r "${REPO_ROOT}/requirements.txt"
-# Install the asset_vision package in editable mode so all modules are importable
+# Install asset_vision into the venv (for web dashboard / plain-Python use)
 "${VENV_DIR}/bin/pip" install --quiet -e "${REPO_ROOT}"
-success "Python dependencies installed (asset_vision package registered)."
+success "Python dependencies installed in venv."
+
+# ── 3b. Install asset_vision into system Python3 (for ROS2 nodes) ────────
+# ROS2 launch files use system Python3, not the venv.
+# We install with --no-deps to avoid re-downloading torch/ultralytics.
+info "Registering asset_vision in system Python3 (for ROS2 nodes)…"
+if python3 -m pip install --user --quiet -e "${REPO_ROOT}" --no-deps 2>/dev/null; then
+    success "asset_vision registered in system Python3 (~/.local/lib/…)."
+else
+    warn "pip install --user failed (old pip?). Adding PYTHONPATH to ~/.bashrc instead."
+    PYPATH_LINE="export PYTHONPATH=\"${REPO_ROOT}:\${PYTHONPATH}\""
+    if ! grep -qF "${REPO_ROOT}" "${HOME}/.bashrc" 2>/dev/null; then
+        echo "" >> "${HOME}/.bashrc"
+        echo "# asset_vision — added by scripts/install.sh" >> "${HOME}/.bashrc"
+        echo "${PYPATH_LINE}" >> "${HOME}/.bashrc"
+        success "PYTHONPATH updated in ~/.bashrc (re-open terminal or: source ~/.bashrc)."
+    else
+        success "PYTHONPATH already set in ~/.bashrc."
+    fi
+fi
 
 # ── 4. Config file ────────────────────────────────────────────────────────
 if [[ ! -f "${REPO_ROOT}/config.yaml" ]]; then
