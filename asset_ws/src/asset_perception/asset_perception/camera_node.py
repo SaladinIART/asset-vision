@@ -34,7 +34,7 @@ class CameraNode(Node):
         super().__init__("camera_node")
 
         # Declare parameters (overridable from launch / CLI)
-        self.declare_parameter("camera_url",      "http://192.168.0.5:8080/video")
+        self.declare_parameter("camera_url",      "http://192.168.1.100:8080/video")
         self.declare_parameter("target_fps",      5.0)
         self.declare_parameter("frame_width",     640)
         self.declare_parameter("reconnect_delay", 3.0)

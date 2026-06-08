@@ -16,6 +16,8 @@ data/
 *.onnx
 *.xml
 *.bin
+# …but DO keep ROS2 package manifests (colcon needs them to build)
+!**/package.xml
 
 # Captured frames / thumbnails
 frames/
@@ -32,7 +34,8 @@ snapshots/
 .DS_Store
 Thumbs.db
 
-# IDE
+# IDE / local tooling (personal, machine-specific)
 .vscode/
 .idea/
+.claude/
 *.swp

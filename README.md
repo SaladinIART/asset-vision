@@ -206,7 +206,7 @@ ros2 launch asset_perception asset_system.launch.py
 Optional overrides:
 ```bash
 ros2 launch asset_perception asset_system.launch.py \
-  camera_url:=http://192.168.0.5:8080/video \
+  camera_url:=http://192.168.1.100:8080/video \
   target_fps:=10.0 \
   presence_window_sec:=120.0
 ```

@@ -2,8 +2,8 @@
 # Edit these values to match your setup before running.
 
 camera:
-  url: "http://192.168.0.5:8080/video"     # Oppo Reno7 IP Webcam
-  shot_url: "http://192.168.0.5:8080/shot.jpg"
+  url: "http://192.168.1.100:8080/video"   # your phone running the IP Webcam app
+  shot_url: "http://192.168.1.100:8080/shot.jpg"
   target_fps: 5          # frames per second to process (keep low on CPU-only)
   width: 640             # resize width (height auto-scaled)
   reconnect_delay: 3     # seconds between reconnect attempts
@@ -23,6 +23,8 @@ storage:
   presence_window_sec: 300   # seconds until an asset flips to "missing"
 
 web:
-  host: "0.0.0.0"
+  host: "127.0.0.1"      # localhost only (safe default). Set "0.0.0.0" to expose
+                         # the dashboard to other devices on your LAN — only do this
+                         # on a trusted network; there is no authentication.
   port: 8100
   stream_fps: 10          # annotated MJPEG stream FPS to browser

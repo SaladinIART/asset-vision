@@ -6,7 +6,7 @@
 
 ## Pre-flight
 
-1. **Phone** — Open IP Webcam app → Start Server. Note the IP (default: `192.168.0.5:8080`).
+1. **Phone** — Open IP Webcam app → Start Server. Note the IP (default: `192.168.1.100:8080`).
 2. **WSL** — Make sure Ubuntu 22.04 is running: `wsl -d Ubuntu-22.04`
 
 ---
@@ -25,7 +25,7 @@ ros2 launch asset_perception asset_system.launch.py
 You should see:
 ```
 [INFO] Asset-Vision ROS2 pipeline starting…
-[INFO] camera_node: Connected to http://192.168.0.5:8080/video
+[INFO] camera_node: Connected to http://192.168.1.100:8080/video
 [INFO] perception_node: Loading YOLO model…
 [INFO] asset_manager_node: Store opened: data/assets.db
 ```
@@ -33,7 +33,7 @@ You should see:
 **Optional overrides:**
 ```bash
 ros2 launch asset_perception asset_system.launch.py \
-  camera_url:=http://192.168.0.5:8080/video \
+  camera_url:=http://192.168.1.100:8080/video \
   target_fps:=10.0 \
   presence_window_sec:=120.0 \
   log_level:=debug
@@ -45,7 +45,7 @@ ros2 launch asset_perception asset_system.launch.py \
 
 ```bash
 # In WSL (new tab)
-cd /mnt/c/Users/salbot01/Salbotics/asset-vision
+cd /path/to/asset-vision      # wherever you cloned the repo
 source ~/asset-venv/bin/activate
 ./start.sh
 ```

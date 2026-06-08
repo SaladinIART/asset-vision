@@ -5,8 +5,8 @@ asset_system.launch.py — starts the full Asset-Vision ROS2 pipeline:
   perception_node   → subscribes /image_raw  → publishes /detections + /image_annotated
   asset_manager_node → subscribes /detections → writes SQLite + serves QueryInventory
 
-All paths are relative to the Phase A project root on the Windows side, mounted at
-/mnt/c/Users/salbot01/Salbotics/asset-vision by WSL2.
+All paths are relative to the Phase A project root, which on WSL2 is the Windows
+checkout mounted under /mnt/c/... (e.g. /path/to/asset-vision).
 
 Usage:
   source /opt/ros/humble/setup.bash
@@ -14,7 +14,7 @@ Usage:
   ros2 launch asset_perception asset_system.launch.py
 
 Optional overrides (append key:=value):
-  camera_url:=http://192.168.0.5:8080/video
+  camera_url:=http://192.168.1.100:8080/video
   target_fps:=10.0
   db_path:=data/assets.db
   presence_window_sec:=300.0
@@ -32,7 +32,7 @@ def generate_launch_description():
     args = [
         DeclareLaunchArgument(
             "camera_url",
-            default_value="http://192.168.0.5:8080/video",
+            default_value="http://192.168.1.100:8080/video",
             description="IP Webcam MJPEG stream URL",
         ),
         DeclareLaunchArgument(

@@ -16,8 +16,8 @@ setup(
     ],
     install_requires=["setuptools"],
     zip_safe=True,
-    maintainer="salbot01",
-    maintainer_email="saladiniart@gmail.com",
+    maintainer="SaladinIART",
+    maintainer_email="asset-vision@users.noreply.github.com",
     description="Asset-Vision ROS2 perception nodes",
     license="MIT",
     entry_points={
