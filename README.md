@@ -178,26 +178,35 @@ CPU-only YOLOv8n achieves **~9 FPS** at 640 px on this hardware — sufficient f
 
 ## Quick start
 
-### Phase A — Plain Python
+### One-command setup (recommended)
 
 ```bash
-# Prerequisites: WSL2 Ubuntu 22.04, libzbar0, ffmpeg
-sudo apt-get install -y libzbar0 ffmpeg
+# Clone and install — no camera needed
 git clone https://github.com/SaladinIART/asset-vision.git
 cd asset-vision
-python3 -m venv ~/asset-venv && source ~/asset-venv/bin/activate
-pip install -r requirements.txt
+bash scripts/install.sh    # sets up venv, deps, samples, config
 
-# Edit config.yaml → set camera.url to your phone IP
-bash start.sh          # http://localhost:8100
+# Start the dashboard
+bash scripts/run.sh        # → http://localhost:8100
 ```
+
+The default `source: sample` mode works with **no hardware** — it loops the
+bundled desk images through the full YOLO + QR + SQLite pipeline.
+
+→ Full setup guide: **[INSTALL.md](INSTALL.md)**
+→ Day-to-day usage: **[USAGE.md](USAGE.md)**
+→ Camera choice guide: **[docs/CAMERA_SOURCES.md](docs/CAMERA_SOURCES.md)**
 
 ### Phase B — ROS2 pipeline
 
+> The `asset_ws/` colcon workspace lives **inside the cloned repo**.
+> Build it from there — not from `~/asset_ws`.
+
 ```bash
-# Requires ROS2 Humble installed (see docs.ros.org/en/humble)
-cd ~/asset_ws
+# From the repo root
 source /opt/ros/humble/setup.bash
+cd asset_ws
+colcon build
 source install/setup.bash
 
 ros2 launch asset_perception asset_system.launch.py
@@ -211,18 +220,13 @@ ros2 launch asset_perception asset_system.launch.py \
   presence_window_sec:=120.0
 ```
 
-Start the web dashboard alongside:
-```bash
-# New terminal
-source ~/asset-venv/bin/activate
-cd /path/to/asset-vision && bash start.sh
-```
-
 Visualise:
 ```bash
 rqt_graph          # node topology
-rviz2 -d install/asset_perception/share/asset_perception/rviz/asset.rviz
+rviz2 -d asset_ws/install/asset_perception/share/asset_perception/rviz/asset.rviz
 ```
+
+→ Full ROS2 walkthrough: **[LAUNCH_GUIDE.md](LAUNCH_GUIDE.md)**
 
 See **[LAUNCH_GUIDE.md](LAUNCH_GUIDE.md)** for the full step-by-step.
 
