@@ -1,39 +1,52 @@
 """
 asset_system.launch.py — starts the full Asset-Vision ROS2 pipeline:
 
-  camera_node       → publishes /image_raw
-  perception_node   → subscribes /image_raw  → publishes /detections + /image_annotated
+  camera_node        → publishes /image_raw
+  perception_node    → subscribes /image_raw → publishes /detections + /image_annotated
   asset_manager_node → subscribes /detections → writes SQLite + serves QueryInventory
 
-All paths are relative to the Phase A project root, which on WSL2 is the Windows
-checkout mounted under /mnt/c/... (e.g. /path/to/asset-vision).
+project_root is auto-detected from this file's location (4 levels up from launch/).
+No hardcoded paths — works on any machine after cloning the repo.
 
 Usage:
   source /opt/ros/humble/setup.bash
-  cd ~/asset_ws && source install/setup.bash
+  cd <repo_root>/asset_ws && colcon build && source install/setup.bash
   ros2 launch asset_perception asset_system.launch.py
 
 Optional overrides (append key:=value):
+  source:=ipcam              camera source (ipcam | usb | integrated | sample)
   camera_url:=http://192.168.1.100:8080/video
   target_fps:=10.0
   db_path:=data/assets.db
   presence_window_sec:=300.0
-  log_level:=info   (info | debug | warn)
+  log_level:=info            (info | debug | warn)
 """
+
+from pathlib import Path
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, LogInfo
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
+# Auto-detect the repo root: this file is at
+#   <repo_root>/asset_ws/src/asset_perception/launch/asset_system.launch.py
+# so 4 .parent steps reach <repo_root>.
+_PROJECT_ROOT = str(Path(__file__).resolve().parent.parent.parent.parent)
+
 
 def generate_launch_description():
     # ── Declare overridable arguments ──────────────────────────────────────
     args = [
         DeclareLaunchArgument(
+            "source",
+            default_value="ipcam",
+            description="Camera source: ipcam | usb | integrated | sample",
+        ),
+        DeclareLaunchArgument(
             "camera_url",
             default_value="http://192.168.1.100:8080/video",
-            description="IP Webcam MJPEG stream URL",
+            description="IP Webcam MJPEG stream URL (used when source=ipcam)",
         ),
         DeclareLaunchArgument(
             "target_fps",
@@ -43,7 +56,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "db_path",
             default_value="data/assets.db",
-            description="Path to SQLite database (relative to asset-vision root)",
+            description="Path to SQLite database",
         ),
         DeclareLaunchArgument(
             "presence_window_sec",
@@ -58,7 +71,7 @@ def generate_launch_description():
     ]
 
     cfg = {k: LaunchConfiguration(k) for k in [
-        "camera_url", "target_fps", "db_path",
+        "source", "camera_url", "target_fps", "db_path",
         "presence_window_sec", "log_level",
     ]}
 
@@ -70,8 +83,10 @@ def generate_launch_description():
         output="screen",
         arguments=["--ros-args", "--log-level", cfg["log_level"]],
         parameters=[{
-            "camera_url": cfg["camera_url"],
-            "target_fps": cfg["target_fps"],
+            "project_root": _PROJECT_ROOT,   # enables import fallback
+            "source":       cfg["source"],
+            "camera_url":   cfg["camera_url"],
+            "target_fps":   cfg["target_fps"],
         }],
     )
 
@@ -82,9 +97,10 @@ def generate_launch_description():
         output="screen",
         arguments=["--ros-args", "--log-level", cfg["log_level"]],
         parameters=[{
-            "model":      "yolov8n.pt",
-            "confidence": 0.45,
-            "device":     "cpu",
+            "project_root": _PROJECT_ROOT,
+            "model":        "yolov8n.pt",
+            "confidence":   0.45,
+            "device":       "cpu",
         }],
     )
 
@@ -95,6 +111,7 @@ def generate_launch_description():
         output="screen",
         arguments=["--ros-args", "--log-level", cfg["log_level"]],
         parameters=[{
+            "project_root":        _PROJECT_ROOT,
             "db_path":             cfg["db_path"],
             "presence_window_sec": cfg["presence_window_sec"],
             "presence_sweep_sec":  30.0,
@@ -105,6 +122,7 @@ def generate_launch_description():
         "\n"
         "════════════════════════════════════════════════\n"
         "  Asset-Vision ROS2 pipeline starting…\n"
+        f"  Project root : {_PROJECT_ROOT}\n"
         "  camera_node  →  /image_raw\n"
         "  perception_node  →  /detections + /image_annotated\n"
         "  asset_manager_node  →  SQLite + QueryInventory srv\n"
