@@ -25,7 +25,6 @@ See docs/CAMERA_SOURCES.md for a full comparison (latency, risk, WSL2 support).
 """
 from __future__ import annotations
 
-import glob
 import logging
 import os
 import time

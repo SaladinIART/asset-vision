@@ -285,9 +285,6 @@ def _row_to_detection(row: sqlite3.Row) -> DetectionRecord:
 # CLI / unit test: python store.py
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
-    import shutil
-    import sys
-
     logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 
     TEST_DB = "/tmp/test_assets.db"

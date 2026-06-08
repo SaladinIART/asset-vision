@@ -8,9 +8,7 @@ Run with:
 """
 from dataclasses import dataclass
 
-import cv2
 import numpy as np
-import pytest
 from PIL import Image
 
 from asset_vision.qrtools import (

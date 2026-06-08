@@ -1,0 +1,14 @@
+# Minimal dependencies for CI (lint + pytest).
+# Tests cover store.py and qrtools.py — neither needs torch/ultralytics.
+# Using this instead of requirements.txt keeps CI < 60 s (vs 5+ min for torch).
+#
+# Usage (CI and local fast-test):
+#   pip install -r requirements-ci.txt && pip install -e . --no-deps
+opencv-python-headless>=4.9.0
+pyzbar>=0.1.9
+qrcode[pil]>=7.4.2
+Pillow>=10.0.0
+pyyaml>=6.0.1
+pytest>=8.0.0
+pytest-cov>=5.0.0
+ruff>=0.4.0

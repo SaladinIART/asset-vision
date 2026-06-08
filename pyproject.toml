@@ -42,3 +42,12 @@ include = ["asset_vision*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts   = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100        # long-form log/doc strings are fine; 88 is too tight
+
+[tool.ruff.lint]
+select  = ["E", "F", "W"]
+ignore  = [
+    "E402",  # module-level import not at top — ROS2 nodes use deferred imports intentionally
+]

@@ -6,7 +6,6 @@ Run with:
 """
 import time
 
-import pytest
 from asset_vision.store import AssetStore
 
 

@@ -1,5 +1,7 @@
 # Asset-Vision
 
+[![CI](https://github.com/SaladinIART/asset-vision/actions/workflows/ci.yml/badge.svg)](https://github.com/SaladinIART/asset-vision/actions/workflows/ci.yml)
+
 > **"I set out to build an asset-monitoring system. Once it worked, I realized the architecture was a robotics perception pipeline — so I re-built it on ROS2."**
 
 A computer-vision inventory scanner that detects, identifies, and tracks personal belongings using a phone camera, YOLOv8, QR tags, SQLite, and a live web dashboard — re-architected as a full ROS2 Humble node graph in Phase B.

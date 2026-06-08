@@ -5,10 +5,7 @@ Reads the same SQLite DB as the pipeline; pipeline runs in a background thread.
 import asyncio
 import io
 import logging
-import os
-import time
 from pathlib import Path
-from typing import Optional
 
 import cv2
 import numpy as np
@@ -20,7 +17,7 @@ from fastapi.templating import Jinja2Templates
 
 from asset_vision.pipeline import Pipeline
 from asset_vision.qrtools  import make_asset_label, make_label_sheet
-from asset_vision.store    import AssetStore
+from asset_vision.store    import AssetStore  # noqa: F401 — kept for type clarity
 
 log = logging.getLogger(__name__)
 
