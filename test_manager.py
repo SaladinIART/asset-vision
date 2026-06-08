@@ -1,7 +1,7 @@
 """Verify manager_node's store interaction without a live ROS daemon."""
 import time
 from pathlib import Path
-from store import AssetStore
+from asset_vision.store import AssetStore
 
 TEST_DB = "/tmp/test_manager.db"
 Path(TEST_DB).unlink(missing_ok=True)

@@ -6,7 +6,6 @@ import asyncio
 import io
 import logging
 import os
-import sys
 import time
 from pathlib import Path
 from typing import Optional
@@ -19,12 +18,9 @@ from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-# Allow running from project root
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from pipeline import Pipeline
-from qrtools import make_asset_label, make_label_sheet
-from store import AssetStore
+from asset_vision.pipeline import Pipeline
+from asset_vision.qrtools  import make_asset_label, make_label_sheet
+from asset_vision.store    import AssetStore
 
 log = logging.getLogger(__name__)
 

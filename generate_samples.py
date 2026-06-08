@@ -10,15 +10,12 @@ Run this once after cloning if the samples/ folder is missing:
 
 Or customise ASSETS below and re-run to generate different labels.
 """
-import sys
 from pathlib import Path
 
 import cv2
 import numpy as np
 
-# Ensure we can import from the project root
-sys.path.insert(0, str(Path(__file__).parent))
-from qrtools import make_qr_image  # noqa: E402
+from asset_vision.qrtools import make_qr_image
 
 # ---------------------------------------------------------------------------
 # Customise these to generate your own sample assets

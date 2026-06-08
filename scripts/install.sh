@@ -67,7 +67,9 @@ fi
 info "Installing Python dependencies…"
 "${VENV_DIR}/bin/pip" install --quiet --upgrade pip
 "${VENV_DIR}/bin/pip" install --quiet -r "${REPO_ROOT}/requirements.txt"
-success "Python dependencies installed."
+# Install the asset_vision package in editable mode so all modules are importable
+"${VENV_DIR}/bin/pip" install --quiet -e "${REPO_ROOT}"
+success "Python dependencies installed (asset_vision package registered)."
 
 # ── 4. Config file ────────────────────────────────────────────────────────
 if [[ ! -f "${REPO_ROOT}/config.yaml" ]]; then
