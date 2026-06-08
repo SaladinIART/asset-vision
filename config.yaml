@@ -2,11 +2,26 @@
 # Edit these values to match your setup before running.
 
 camera:
-  url: "http://192.168.1.100:8080/video"   # your phone running the IP Webcam app
-  shot_url: "http://192.168.1.100:8080/shot.jpg"
+  # ── Source selector ──────────────────────────────────────────────────────
+  # Choose one: sample | usb | integrated | ipcam
+  # See docs/CAMERA_SOURCES.md for tradeoffs (latency, WSL2 support, risk).
+  source: sample          # "sample" works with NO hardware — great for first run
+
+  # ── Sample source (used when source: sample) ─────────────────────────────
+  samples_dir: "samples"  # folder of JPG/PNG images to loop
+
+  # ── USB / integrated webcam (used when source: usb or integrated) ─────────
+  # index: 0              # camera device index (0 = first camera)
+  # WSL2 users: USB passthrough via usbipd-win required — see CAMERA_SOURCES.md
+
+  # ── IP Camera / phone (used when source: ipcam) ───────────────────────────
+  # url: "http://192.168.1.100:8080/video"   # replace with your phone's IP
+  # shot_url: "http://192.168.1.100:8080/shot.jpg"
+  # reconnect_delay: 3     # seconds between reconnect attempts
+
+  # ── Shared settings ────────────────────────────────────────────────────────
   target_fps: 5          # frames per second to process (keep low on CPU-only)
   width: 640             # resize width (height auto-scaled)
-  reconnect_delay: 3     # seconds between reconnect attempts
 
 detection:
   model: "yolov8n.pt"    # auto-downloaded on first run; gitignored

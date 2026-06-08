@@ -15,7 +15,7 @@ import cv2
 import numpy as np
 import yaml
 
-from capture import IPCameraCapture
+from capture import make_source
 from detector import YOLODetector
 from qrtools import decode_qr, annotate_qr, associate_qr_to_detections
 from store import AssetStore
@@ -42,7 +42,7 @@ class Pipeline:
         self.frames_dir = Path(cfg["storage"]["frames_dir"])
         self.frames_dir.mkdir(parents=True, exist_ok=True)
 
-        self._capture = IPCameraCapture(cfg["camera"])
+        self._capture = make_source(cfg["camera"])
         self._detector = YOLODetector(cfg["detection"])
 
         self._frame_q: queue.Queue = queue.Queue(maxsize=2)
