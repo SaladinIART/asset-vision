@@ -1,0 +1,47 @@
+# Asset-Vision — example configuration
+# Copy to config.yaml and edit to match your setup:
+#   cp config.example.yaml config.yaml
+#
+# scripts/install.sh does this automatically on first run.
+
+camera:
+  # ── Source selector ──────────────────────────────────────────────────────
+  # Choose one: sample | usb | integrated | ipcam
+  # See docs/CAMERA_SOURCES.md for a full comparison (latency, risk, WSL2).
+  source: sample          # "sample" works with NO hardware — best for first run
+
+  # ── Sample source (source: sample) ──────────────────────────────────────
+  samples_dir: "samples"  # folder of JPG/PNG images to loop
+
+  # ── USB / integrated webcam (source: usb  or  source: integrated) ────────
+  # index: 0              # camera device index (0 = first camera)
+  # WSL2 note: requires usbipd-win passthrough — see docs/CAMERA_SOURCES.md
+
+  # ── IP Camera / phone (source: ipcam) ───────────────────────────────────
+  # url: "http://192.168.1.100:8080/video"   # replace with YOUR phone's IP
+  # shot_url: "http://192.168.1.100:8080/shot.jpg"
+  # reconnect_delay: 3
+
+  # ── Shared settings ──────────────────────────────────────────────────────
+  target_fps: 5           # frames per second (keep low on CPU-only machines)
+  width: 640              # resize width in pixels (height auto-scaled)
+
+detection:
+  model: "yolov8n.pt"     # auto-downloaded on first run; gitignored
+  confidence: 0.45        # minimum detection confidence (0–1)
+  device: "cpu"           # "cpu" works on any machine; "cuda" needs NVIDIA GPU
+
+qr:
+  prefix: "AV-"           # asset ID prefix, e.g. AV-0001
+  label_size_mm: 35       # printed QR label size in millimetres
+
+storage:
+  db_path: "data/assets.db"
+  frames_dir: "data/frames"
+  presence_window_sec: 300    # seconds before an asset flips to "missing"
+
+web:
+  host: "127.0.0.1"       # localhost only (safe). Use "0.0.0.0" to expose on LAN.
+                           # Warning: no authentication — LAN-only on a trusted network.
+  port: 8100
+  stream_fps: 10           # annotated MJPEG stream FPS sent to browser
