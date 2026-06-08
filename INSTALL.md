@@ -15,9 +15,14 @@
 | **Disk** | ~3 GB free (Python env + YOLOv8 weights downloaded on first run) |
 | **Camera** | Optional — the default `sample` mode needs no hardware at all |
 
-### Windows users (WSL2 setup)
+### Windows users — two paths
 
-If you are on Windows, install WSL2 first:
+| Path | When to choose |
+|------|----------------|
+| **Windows-native (Phase A only)** | You want the web dashboard + local camera without WSL2. See **[WINDOWS.md](WINDOWS.md)**. |
+| **WSL2 Ubuntu (Phase A + B)** | You want the full ROS2 pipeline. Follow the steps below. |
+
+To install WSL2:
 
 ```powershell
 # In Windows PowerShell (run as Administrator)
