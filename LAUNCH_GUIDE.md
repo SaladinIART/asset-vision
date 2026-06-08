@@ -101,7 +101,7 @@ ros2 service call /asset_manager_node/query_inventory \
 
 ---
 
-## Screenshot checklist for LinkedIn post
+## Demo screenshot checklist
 
 - [ ] `rqt_graph` showing all 3 nodes connected
 - [ ] `rviz2` showing annotated live feed with YOLO boxes + QR overlay

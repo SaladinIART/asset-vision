@@ -25,7 +25,7 @@ A computer-vision inventory scanner that detects, identifies, and tracks persona
 ### Phase B — ROS2 node graph
 
 <!-- rqt_graph screenshot — capture with: ros2 launch asset_perception asset_system.launch.py source:=sample && rqt_graph -->
-> 📷 *Live rqt_graph screenshot coming — see [docs/LINKEDIN_POST_2.md](docs/LINKEDIN_POST_2.md) for the capture session checklist.*
+> 📷 *Live rqt_graph screenshot coming — see [LAUNCH_GUIDE.md](LAUNCH_GUIDE.md#demo-screenshot-checklist) for the capture steps.*
 
 ---
 

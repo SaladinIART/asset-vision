@@ -16,7 +16,7 @@
 | A4 | SQLite store + presence logic (present / missing) | ✅ done |
 | A5 | Pipeline orchestration (capture → detect → QR → store) | ✅ done |
 | A6 | FastAPI web dashboard (live feed + roster + QR generator) | ✅ done |
-| A7 | Repo hygiene + README + demo assets → **LinkedIn post #1** | ✅ done |
+| A7 | Repo hygiene + README + demo assets | ✅ done |
 
 ## Phase B — ROS2 Humble Refactor
 
@@ -27,7 +27,7 @@
 | B2 | camera_node (publishes `/image_raw`) | ✅ done |
 | B3 | perception_node (YOLO + QR → `/detections`) | ✅ done |
 | B4 | asset_manager_node + QueryInventory service | ✅ done |
-| B5 | launch file + RViz + dashboard integration → **LinkedIn post #2** | ✅ done |
+| B5 | launch file + RViz + dashboard integration | ✅ done |
 | B6 | README v2 — robotics section + node-graph diagram | ✅ done |
 
 ## Phase C — Later

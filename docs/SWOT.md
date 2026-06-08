@@ -36,7 +36,7 @@
 | # | Status | Item |
 |---|--------|------|
 | O1 | ✅ Converted → S7 | Pluggable source already runs the same code in 3 environments → capability matrix in README turns the gap into a documented strength |
-| O2 | ✅ Converted | Windows-native Phase A = zero-friction local-camera demo → easiest path to `live_dashboard.png` and unblocks LinkedIn post #2 |
+| O2 | ✅ Converted | Windows-native Phase A = zero-friction local-camera demo → easiest path to capture `live_dashboard.png` and the demo screenshots |
 | O3 | ✅ Converted | Windows path + usbipd guide together = honest "works on any setup" teaching story |
 | O4 | Open | OpenVINO export for Intel Iris Xe — CPU inference is currently ~9 FPS; OpenVINO could push 2–3× faster without CUDA |
 | O5 | Open | Jazzy/Kilted rebuild — clean tutorial version of Phase B for the next ROS2 LTS cohort |
@@ -75,5 +75,5 @@ On Windows-native or bare-metal Linux, all four sources work out of the box.*
 | Wave | Focus | Status |
 |------|-------|--------|
 | Wave 1 | Safe + runnable + documented (scrub, sample source, install/run scripts, camera guide, INSTALL/USAGE, SVG diagram) | ✅ Complete |
-| Wave 2 | Teaching-grade refactor (`asset_vision` package, ROS2 param de-hardcode, pytest suite, CI, LinkedIn draft) | ✅ Complete |
+| Wave 2 | Teaching-grade refactor (`asset_vision` package, ROS2 param de-hardcode, pytest suite, CI) | ✅ Complete |
 | Wave 3 | Cross-environment + live proof (`install.ps1`/`run.ps1`, `WINDOWS.md`, usbipd deep guide, capability matrix, capture checklist, this SWOT) | ✅ Complete (screenshots pending author capture) |

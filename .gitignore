@@ -41,5 +41,4 @@ Thumbs.db
 # IDE / local tooling (personal, machine-specific)
 .vscode/
 .idea/
-.claude/
 *.swp
