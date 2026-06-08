@@ -29,6 +29,16 @@ dependencies = [
 Homepage = "https://github.com/SaladinIART/asset-vision"
 Repository = "https://github.com/SaladinIART/asset-vision"
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+]
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["asset_vision*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-v --tb=short"
