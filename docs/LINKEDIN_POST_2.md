@@ -65,37 +65,65 @@ If you're learning ROS2 and want to see a real perception pipeline built bottom-
 Attach **2 images** in this order:
 
 1. **`docs/rqt_graph.png`** — rqt_graph showing the 3-node topology
-   - Run: `rqt_graph` while the system is live
-   - Set view to "All" / uncheck dead sinks
+   - Run with `source:=sample` — no USB camera needed for this screenshot
+   - Set view to "All" and uncheck "Dead sinks" (or tick "Nodes/Topics (all)")
    - Should show: `camera_node → /image_raw → perception_node → /detections → asset_manager_node`
 
-2. **`docs/live_dashboard.png`** — browser dashboard with USB cam feed + YOLO boxes + roster
-   - Run system with `source: usb` in config.yaml
-   - Capture the browser window at http://localhost:8100
+2. **`docs/live_dashboard.png`** — browser dashboard with real camera feed + YOLO boxes + roster
+   - Easiest path: **Windows-native** with `source: integrated` (laptop webcam, no usbipd)
    - Aim for at least one detected object with a bounding box visible
 
 ---
 
 ## Capture session checklist
 
+### Image 1 — rqt_graph (in WSL2, sample source — no USB camera needed)
+
 ```bash
-# In WSL2 — start the ROS2 pipeline (USB camera)
+# Terminal 1 — build and launch with sample source
 source /opt/ros/humble/setup.bash
-cd ~/asset_ws
+cd /path/to/asset-vision/asset_ws
 source install/setup.bash
-ros2 launch asset_perception asset_system.launch.py source:=usb
+ros2 launch asset_perception asset_system.launch.py source:=sample
 
-# In a second terminal
+# Terminal 2 — open rqt_graph
 rqt_graph
-# Screenshot → save to docs/rqt_graph.png
-
-# Browser → http://localhost:8100
-# Screenshot → save to docs/live_dashboard.png
+# In the rqt_graph window:
+#   Top-left dropdown → "Nodes/Topics (all)"
+#   Uncheck "Dead sinks" if nodes appear to be missing
+# Screenshot the graph window → save to docs/rqt_graph.png
 ```
 
-Then from the repo root:
+### Image 2 — live dashboard (Windows-native, easiest path)
+
+```powershell
+# In Windows PowerShell (repo root)
+.\scripts\run.ps1
+
+# Edit config.yaml first:
+#   camera:
+#     source: integrated   # built-in laptop cam
+# OR:
+#     source: usb          # USB webcam
+
+# Open http://localhost:8100 in browser
+# Wait for at least one YOLO detection to appear
+# Screenshot the browser window → save to docs/live_dashboard.png
+```
+
+**Alternative — WSL2 with USB camera (usbipd):**
+
+```bash
+# Admin PowerShell: usbipd attach --wsl --busid <ID>
+# WSL2 Terminal:
+ros2 launch asset_perception asset_system.launch.py source:=usb
+# Screenshot browser at http://localhost:8100 → docs/live_dashboard.png
+```
+
+### Commit the screenshots
+
 ```bash
 git add docs/rqt_graph.png docs/live_dashboard.png
-git commit -m "docs: add live USB camera shots (rqt_graph + dashboard)"
+git commit -m "docs: add live demo screenshots (rqt_graph + dashboard)"
 git push
 ```
