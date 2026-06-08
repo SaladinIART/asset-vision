@@ -19,13 +19,17 @@ data/
 # …but DO keep ROS2 package manifests (colcon needs them to build)
 !**/package.xml
 
-# Captured frames / thumbnails
+# Captured frames / thumbnails (runtime output — do not commit)
 frames/
 snapshots/
+data/frames/
 *.jpg
 *.png
+# …but keep intentional assets
 !web/static/**/*.png
 !docs/**/*.png
+!samples/*.jpg
+!samples/*.png
 
 # Logs
 *.log
