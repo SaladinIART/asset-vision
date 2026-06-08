@@ -290,9 +290,11 @@ The same pluggable code runs across three environments — pick the camera that 
 
 ---
 
-## Project checklist
+## Project health
 
 See [CHECKLIST.md](CHECKLIST.md) for checkpoint-by-checkpoint progress.
+
+See [docs/SWOT.md](docs/SWOT.md) for the capability matrix and Strengths / Weaknesses / Opportunities / Threats breakdown (updated post Wave 3).
 
 ---
 
