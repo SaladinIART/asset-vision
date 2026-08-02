@@ -1,0 +1,16 @@
+LICENSE
+README.md
+pyproject.toml
+asset_vision/__init__.py
+asset_vision/capture.py
+asset_vision/detector.py
+asset_vision/pipeline.py
+asset_vision/qrtools.py
+asset_vision/store.py
+asset_vision.egg-info/PKG-INFO
+asset_vision.egg-info/SOURCES.txt
+asset_vision.egg-info/dependency_links.txt
+asset_vision.egg-info/requires.txt
+asset_vision.egg-info/top_level.txt
+tests/test_qrtools.py
+tests/test_store.py
